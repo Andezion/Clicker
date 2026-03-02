@@ -98,7 +98,7 @@ Korepetytor - koszt 575 tok - +2,0 tok/sek - 3,2 tok/sek - 393 sek ≈ 6,5 min
 
 **Łączny dochód po zakupach:** 3,2 tok/sek = **192 tok/min**
 
-Wydano na ulepszenia: 29+58+86+69+173+575 = **990 tok**
+Wydano na ulepszenia: 29 + 58 + 86 + 69 + 173 + 575 = **990 tok**
 Pozostało do zebrania: ok. **2 700 tok**
 
 Przy 192 tok/min: 2700 / 192 = **14 minut**
@@ -136,12 +136,12 @@ XP za kliknięcie: +1 XP co 3 kliknięcia (jeśli motywacja > 0)
 Łączny XP wymagany do osiągnięcia Poziomu 10:
 
 ```
-XP_total = Σ(n × 50) dla n = 1..10 = 50 × (1+2+...+10) = 50 × 55 = 2 750 XP
+XP_total = Σ(n × 50) dla n = 1..10 = 50 × (1 + 2 + ... + 10) = 50 × 55 = 2 750 XP
 Wymagana liczba kliknięć: 2750 × 3 = 8 250 kliknięć
 Przy 2 kliknięciach/sek: 8250 / 2 = 4 125 sek = 68,75 min ≈ 1 godz. 9 min
 ```
 
-**⏱ Battle Pass Poziom 10 osiągalny w ~1 godzinę 9 minut aktywnego klikania** (2–3 sesje).
+**Battle Pass Poziom 10 osiągalny w ~1 godzinę 9 minut aktywnego klikania** (2–3 sesje).
 
 ---
 
@@ -152,10 +152,10 @@ Przy 2 kliknięciach/sek: 8250 / 2 = 4 125 sek = 68,75 min ≈ 1 godz. 9 min
 | Licencjat     | 7         | 30       | Sem1: 34, Sem2–7: ~15 | ~124 min         |
 | Magister      | 4         | 40       | ~20 min               | ~80 min          |
 | Doktorant     | 4         | 60       | ~25 min               | ~100 min         |
-| **Razem**     | **15**    | **610**  | —                     | **~304 min**     |
+| **Razem**     | **15**    | **610**  | -                     | **~304 min**     |
 
 **Łączny aktywny czas gry: ≈ 5–6 godzin**
-**Czas kalendarzowy przy graniu 20–30 min/dzień: ~2 tygodnie** — idealny cykl dla gry mobilnej.
+**Czas kalendarzowy przy graniu 20–30 min/dzień: ~2 tygodnie** - idealny cykl dla gry mobilnej.
 
 ---
 
