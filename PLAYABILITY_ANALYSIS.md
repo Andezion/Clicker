@@ -1,9 +1,5 @@
 # EClicker
 
-## 1. Przegląd mechanik gry
-
-**EClicker** to gra idle/clicker o tematyce studenckiej. Gracz zdobywa **Tokeny** (główna waluta) poprzez klikanie i pasywny dochód, a następnie wymienia je na **ECTS** (punkty kredytowe) w celu zaliczania semestrów i poziomów edukacji.
-
 ### Hierarchia edukacji
 
 | Poziom        | Semestrów | ECTS/semestr | Łącznie ECTS |
@@ -11,7 +7,6 @@
 | Licencjat     | 7         | 30           | 210          |
 | Magister      | 4         | 40           | 160          |
 | Doktorant     | 4         | 60           | 240          |
-| Profesor      | ∞         | 100          | ∞ (tryb endless)|
 
 ---
 
