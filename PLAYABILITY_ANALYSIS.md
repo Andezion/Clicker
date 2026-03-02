@@ -77,7 +77,7 @@ gracz musi zarządzać motywacją strategicznie (reklama +20%, kofeina 50 ECTS =
 
 ## 3. Obliczenia czasu przechodzenia
 
-### 3.1 Semestr 1 — szczegółowa analiza krok po kroku
+### 3.1 Semestr 1 - szczegółowa analiza krok po kroku
 
 **Cel:** 30 ECTS = 30 × 100 = **3 000 tokenów**
 
@@ -129,7 +129,7 @@ w trybie 2–3 sesji dziennie po 10–15 minut.
 
 ---
 
-### 3.3 Battle Pass — obliczenie ukończenia
+### 3.3 Battle Pass - obliczenie ukończenia
 
 XP za kliknięcie: +1 XP co 3 kliknięcia (jeśli motywacja > 0)
 
