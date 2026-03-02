@@ -88,12 +88,12 @@ Założenia:
 **Faza 0** (start): dochód = 0,1 × 2 = **0,2 tok/sek**
 
 ```
-Laptop ×1  → koszt  29 tok → czas oczekiwania: 29 / 0,2 = 145 sek ≈ 2,4 min
-Laptop ×2  → koszt  58 tok → tokPerKlik = 0,2 → 0,4 tok/sek → 145 sek ≈ 2,4 min
-Laptop ×3  → koszt  86 tok → tokPerKlik = 0,3 → 0,6 tok/sek → 144 sek ≈ 2,4 min
-Kawa ×1    → koszt  69 tok → tokPerKlik = 0,35→ 0,7 tok/sek →  99 sek ≈ 1,6 min
-Znajomy ×1 → koszt 173 tok → +0,5 tok/sek   → 1,2 tok/sek → 247 sek ≈ 4,1 min
-Korepetytor→ koszt 575 tok → +2,0 tok/sek   → 3,2 tok/sek → 393 sek ≈ 6,5 min
+Laptop ×1 - koszt  29 tok - czas oczekiwania: 29 / 0,2 = 145 sek ≈ 2,4 min
+Laptop ×2 - koszt  58 tok - tokPerKlik = 0,2 → 0,4 tok/sek → 145 sek ≈ 2,4 min
+Laptop ×3 - koszt  86 tok - tokPerKlik = 0,3 → 0,6 tok/sek → 144 sek ≈ 2,4 min
+Kawa ×1 - koszt  69 tok - tokPerKlik = 0,35→ 0,7 tok/sek →  99 sek ≈ 1,6 min
+Znajomy ×1 - koszt 173 tok - +0,5 tok/sek   → 1,2 tok/sek → 247 sek ≈ 4,1 min
+Korepetytor - koszt 575 tok - +2,0 tok/sek   → 3,2 tok/sek → 393 sek ≈ 6,5 min
 ```
 
 **Łączny dochód po zakupach:** 3,2 tok/sek = **192 tok/min**
