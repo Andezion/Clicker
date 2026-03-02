@@ -176,28 +176,28 @@ ectsPerKlik = 0,1 × (1 + prestigePoints × 0,1)
 | 10       | 0,20        |
 | 15       | 0,25        |
 
-Wzrost liniowy — gracz odczuwa postęp po każdym semestrze.
+Wzrost liniowy - gracz odczuwa postęp po każdym semestrze.
 
-### 4.2 tapMultiplier — kumulatywny bonus
+### 4.2 tapMultiplier - kumulatywny bonus
 
 Co 3 medale: tapMultiplier × 1,01
 Przy przejściu na wyższy poziom edukacji: tapMultiplier × 1,10
 
 ```
 Po 7 semestrach Licencjatu + przejście na Magistra:
-- 7 medali → 2 bonusy po ×1,01 → ×1,0201
-- 1 awans → ×1,10
+- 7 medali - 2 bonusy po ×1,01 → ×1,0201
+- 1 awans - × 1,10
 - Łącznie: tapMultiplier ≈ 1,0201 × 1,10 ≈ 1,122
 
 Po 15 semestrach + 3 awansach:
-- 5 bonusów po ×1,01 → ×1,0510
-- 3 awanse → ×1,10³ = ×1,331
-- Łącznie: tapMultiplier ≈ 1,399 → prawie +40% do dochodu
+- 5 bonusów po × 1,01 → ×1,0510
+- 3 awanse - ×1,10³ = ×1,331
+- Łącznie: tapMultiplier ≈ 1,399 - prawie +40% do dochodu
 ```
 
 ---
 
-## 5. Zdarzenia losowe — analiza balansu
+## 5. Zdarzenia losowe - analiza balansu
 
 Zdarzenia generowane są co 30–90 sekund (średnio co **60 sekund**).
 
