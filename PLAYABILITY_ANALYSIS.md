@@ -103,7 +103,7 @@ Pozostało do zebrania: ok. **2 700 tok**
 
 Przy 192 tok/min: 2700 / 192 = **14 minut**
 
-**⏱ Łączny czas Semestru 1: ≈ 20 minut (zakupy) + 14 minut (zbieranie) ≈ 34 minuty aktywnej gry**
+**Łączny czas Semestru 1: ≈ 20 minut (zakupy) + 14 minut (zbieranie) ≈ 34 minuty aktywnej gry**
 
 ---
 
@@ -120,8 +120,8 @@ Dochód = tokensPerSecond × min(sekundyOffline, 28800)
 
 ```
 Dochód offline = 2,0 tok/sek × 14 400 sek = 28 800 tokenów
-Przy kursie 110 tok/ECTS → 261 ECTS pasywnie
-Cel semestru = 30 ECTS → wykonany 8-krotnie!
+Przy kursie 110 tok/ECTS - 261 ECTS pasywnie
+Cel semestru = 30 ECTS - wykonany 8-krotnie!
 ```
 
 Oznacza to, że **gra nie wymaga ciągłej obecności** i świetnie sprawdza się
