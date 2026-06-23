@@ -55,3 +55,4 @@ windows/
 .metadata
 pubspec.lock
 android/
+analysis_options.yaml
