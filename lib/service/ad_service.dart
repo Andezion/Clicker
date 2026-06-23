@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdService {
@@ -16,7 +17,7 @@ class AdService {
       _isInitialized = true;
       await _loadRewardedAd();
     } catch (e) {
-      print('AdMob initialization error: $e');
+      debugPrint('AdMob initialization error: $e');
       _isInitialized = false;
     }
   }
@@ -31,7 +32,7 @@ class AdService {
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
-          print('Rewarded ad loaded');
+          debugPrint('Rewarded ad loaded');
           _rewardedAd = ad;
           _isAdLoading = false;
 
@@ -42,7 +43,7 @@ class AdService {
               _loadRewardedAd();
             },
             onAdFailedToShowFullScreenContent: (ad, error) {
-              print('Failed to show rewarded ad: $error');
+              debugPrint('Failed to show rewarded ad: $error');
               ad.dispose();
               _rewardedAd = null;
               _loadRewardedAd();
@@ -50,7 +51,7 @@ class AdService {
           );
         },
         onAdFailedToLoad: (error) {
-          print('Failed to load rewarded ad: $error');
+          debugPrint('Failed to load rewarded ad: $error');
           _rewardedAd = null;
           _isAdLoading = false;
         },
@@ -60,12 +61,12 @@ class AdService {
 
   static Future<bool> showRewardedAd() async {
     if (!_isInitialized) {
-      print('AdMob not initialized');
+      debugPrint('AdMob not initialized');
       return false;
     }
 
     if (_rewardedAd == null) {
-      print('Rewarded ad not ready');
+      debugPrint('Rewarded ad not ready');
       await _loadRewardedAd();
       return false;
     }
@@ -77,13 +78,13 @@ class AdService {
     try {
       await _rewardedAd!.show(
         onUserEarnedReward: (ad, reward) {
-          print('User earned reward: ${reward.amount} ${reward.type}');
+          debugPrint('User earned reward: ${reward.amount} ${reward.type}');
           rewardEarned = true;
         },
       );
       return rewardEarned;
     } catch (e) {
-      print('Error showing rewarded ad: $e');
+      debugPrint('Error showing rewarded ad: $e');
       return false;
     }
   }

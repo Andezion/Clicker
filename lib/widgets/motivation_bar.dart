@@ -21,7 +21,7 @@ class MotivationBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFF2a2a4e),
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: color.withOpacity(0.5), width: 2),
+        border: Border.all(color: color.withValues(alpha: 0.5), width: 2),
       ),
       child: Column(
         children: [
@@ -79,7 +79,7 @@ class MotivationBar extends StatelessWidget {
                   height: 20,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [color.withOpacity(0.7), color],
+                      colors: [color.withValues(alpha: 0.7), color],
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),

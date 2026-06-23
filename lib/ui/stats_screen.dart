@@ -20,7 +20,7 @@ class StatsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildStatCard(
-              '${gameState.educationLevel}',
+              gameState.educationLevel,
               'Semester ${gameState.educationSemester}/${gameState.getTotalSemestersForLevel()}',
               Colors.purple,
             ),
@@ -70,7 +70,7 @@ class StatsScreen extends StatelessWidget {
               child: Text(
                 'Keep grinding!',
                 style: TextStyle(
-                  color: Colors.white.withOpacity(0.5),
+                  color: Colors.white.withValues(alpha: 0.5),
                   fontSize: 16,
                   fontStyle: FontStyle.italic,
                 ),
@@ -87,9 +87,9 @@ class StatsScreen extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: color.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: color.withOpacity(0.5), width: 2),
+        border: Border.all(color: color.withValues(alpha: 0.5), width: 2),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,7 +123,7 @@ class StatsScreen extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.grey.shade800.withOpacity(0.3),
+          color: Colors.grey.shade800.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(15),
         ),
         child: const Center(
@@ -144,7 +144,7 @@ class StatsScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: const Color(0xFF2a2a4e),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.indigo.withOpacity(0.3)),
+            border: Border.all(color: Colors.indigo.withValues(alpha: 0.3)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

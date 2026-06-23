@@ -191,7 +191,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.purple.withOpacity(0.3),
+                          color: Colors.purple.withValues(alpha: 0.3),
                           blurRadius: 10,
                           offset: const Offset(0, 5),
                         ),
@@ -383,7 +383,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       color: const Color(0xFF2a2a4e),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Colors.blue.withOpacity(0.3),
+                        color: Colors.blue.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
@@ -534,7 +534,7 @@ class _PaymentScreenState extends State<PaymentScreen>
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(
-          color: Colors.purple.withOpacity(0.3),
+          color: Colors.purple.withValues(alpha: 0.3),
           width: 1,
         ),
       ),

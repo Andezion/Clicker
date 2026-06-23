@@ -60,7 +60,7 @@ class _EctsButtonState extends State<EctsButton>
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.blue.withOpacity(0.5),
+                color: Colors.blue.withValues(alpha: 0.5),
                 blurRadius: 30,
                 offset: const Offset(0, 10),
               ),

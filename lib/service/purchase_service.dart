@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
 class PurchaseService {
@@ -32,7 +33,7 @@ class PurchaseService {
 
     final bool available = await _iap.isAvailable();
     if (!available) {
-      print('❌ In-App Purchase not available');
+      debugPrint('❌ In-App Purchase not available');
       return false;
     }
 
@@ -41,14 +42,14 @@ class PurchaseService {
     _subscription = _iap.purchaseStream.listen(
       _handlePurchaseUpdates,
       onError: (error) {
-        print('❌ Purchase error: $error');
+        debugPrint('❌ Purchase error: $error');
       },
     );
 
     await restorePurchases();
 
     _isInitialized = true;
-    print('✅ Purchase service initialized');
+    debugPrint('✅ Purchase service initialized');
     return true;
   }
 
@@ -57,27 +58,27 @@ class PurchaseService {
         await _iap.queryProductDetails(_productIds);
 
     if (response.error != null) {
-      print('❌ Error loading products: ${response.error}');
+      debugPrint('❌ Error loading products: ${response.error}');
       return;
     }
 
     if (response.productDetails.isEmpty) {
-      print('⚠️ No products found');
+      debugPrint('⚠️ No products found');
       return;
     }
 
     availableProducts = response.productDetails;
-    print('✅ Loaded ${availableProducts.length} products');
+    debugPrint('✅ Loaded ${availableProducts.length} products');
   }
 
   static void _handlePurchaseUpdates(List<PurchaseDetails> purchases) {
     for (final purchase in purchases) {
-      print('📦 Purchase update: ${purchase.productID} - ${purchase.status}');
+      debugPrint('📦 Purchase update: ${purchase.productID} - ${purchase.status}');
 
       if (purchase.status == PurchaseStatus.purchased) {
         _handleSuccessfulPurchase(purchase);
       } else if (purchase.status == PurchaseStatus.error) {
-        print('❌ Purchase failed: ${purchase.error}');
+        debugPrint('❌ Purchase failed: ${purchase.error}');
       }
 
       if (purchase.pendingCompletePurchase) {
@@ -87,7 +88,7 @@ class PurchaseService {
   }
 
   static void _handleSuccessfulPurchase(PurchaseDetails purchase) {
-    print('✅ Purchase successful: ${purchase.productID}');
+    debugPrint('✅ Purchase successful: ${purchase.productID}');
 
     _onPurchaseSuccess?.call(purchase.productID);
   }
@@ -100,7 +101,7 @@ class PurchaseService {
 
   static Future<bool> buyProduct(String productId) async {
     if (!_isInitialized) {
-      print('❌ Purchase service not initialized');
+      debugPrint('❌ Purchase service not initialized');
       return false;
     }
 
@@ -116,14 +117,14 @@ class PurchaseService {
           await _iap.buyNonConsumable(purchaseParam: purchaseParam);
       return success;
     } catch (e) {
-      print('❌ Error buying product: $e');
+      debugPrint('❌ Error buying product: $e');
       return false;
     }
   }
 
   static Future<bool> buyConsumable(String productId) async {
     if (!_isInitialized) {
-      print('❌ Purchase service not initialized');
+      debugPrint('❌ Purchase service not initialized');
       return false;
     }
 
@@ -139,7 +140,7 @@ class PurchaseService {
           await _iap.buyConsumable(purchaseParam: purchaseParam);
       return success;
     } catch (e) {
-      print('❌ Error buying consumable: $e');
+      debugPrint('❌ Error buying consumable: $e');
       return false;
     }
   }
@@ -147,9 +148,9 @@ class PurchaseService {
   static Future<void> restorePurchases() async {
     try {
       await _iap.restorePurchases();
-      print('✅ Purchases restored');
+      debugPrint('✅ Purchases restored');
     } catch (e) {
-      print('❌ Error restoring purchases: $e');
+      debugPrint('❌ Error restoring purchases: $e');
     }
   }
 

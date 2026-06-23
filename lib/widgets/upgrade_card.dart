@@ -29,8 +29,8 @@ class UpgradeCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           color: canAfford
-              ? Colors.green.withOpacity(0.5)
-              : Colors.grey.withOpacity(0.3),
+              ? Colors.green.withValues(alpha: 0.5)
+              : Colors.grey.withValues(alpha: 0.3),
           width: 2,
         ),
       ),

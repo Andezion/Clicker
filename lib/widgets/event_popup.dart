@@ -34,7 +34,7 @@ class EventPopup extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: _getBorderColor().withOpacity(0.5),
+              color: _getBorderColor().withValues(alpha: 0.5),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -119,7 +119,7 @@ class EventPopup extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.3),
+        color: Colors.black.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(

@@ -331,7 +331,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         gameState.semester++;
       }
 
-      final medalId = '${gameState.educationLevel}_sem${previousSemester}';
+      final medalId = '${gameState.educationLevel}_sem$previousSemester';
       gameState.medals.add(medalId);
 
       if (gameState.medals.length % 3 == 0) {
@@ -430,6 +430,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
                     final success = await AdService.showRewardedAd();
 
+                    if (!context.mounted) return;
                     Navigator.pop(context);
 
                     if (success) {
@@ -694,7 +695,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.purple.withOpacity(0.3),
+            color: Colors.purple.withValues(alpha: 0.3),
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),
@@ -729,7 +730,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '${gameState.educationLevel}',
+                    gameState.educationLevel,
                     style: const TextStyle(color: Colors.white70),
                   ),
                   Text(
@@ -859,7 +860,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           colors: [Colors.purple.shade900, Colors.pink.shade900],
         ),
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.purple.withOpacity(0.5), width: 2),
+        border: Border.all(color: Colors.purple.withValues(alpha: 0.5), width: 2),
       ),
       child: Column(
         children: [
@@ -981,7 +982,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           border: Border.all(color: Colors.yellow, width: 2),
           boxShadow: [
             BoxShadow(
-              color: Colors.orange.withOpacity(0.5),
+              color: Colors.orange.withValues(alpha: 0.5),
               blurRadius: 10,
               spreadRadius: 2,
             ),

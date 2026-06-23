@@ -292,6 +292,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 ElevatedButton.icon(
                   onPressed: () async {
                     await PurchaseService.restorePurchases();
+                    if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Purchases restored!')),
                     );
@@ -359,7 +360,7 @@ class _ShopScreenState extends State<ShopScreen> {
         ),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isPurchased ? Colors.green : Colors.purple.withOpacity(0.5),
+          color: isPurchased ? Colors.green : Colors.purple.withValues(alpha: 0.5),
           width: 2,
         ),
       ),

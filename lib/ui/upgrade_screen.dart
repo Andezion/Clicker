@@ -75,7 +75,7 @@ class UpgradesScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.grey.shade800.withOpacity(0.3),
+                color: Colors.grey.shade800.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(color: Colors.grey.shade700),
               ),
