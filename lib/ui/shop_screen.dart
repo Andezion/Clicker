@@ -3,7 +3,6 @@ import '../service/purchase_service.dart';
 import '../model/game_state.dart';
 import '../service/save_service.dart';
 import 'achievements_screen.dart';
-import 'payment_screen.dart';
 
 class ShopScreen extends StatefulWidget {
   final GameState gameState;
@@ -100,20 +99,27 @@ class _ShopScreenState extends State<ShopScreen> {
 
   Future<void> _buyProduct(String productId, bool isConsumable, String title,
       String description, String emoji, String price) async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PaymentScreen(
-          productTitle: title,
-          productDescription: description,
-          price: price,
-          emoji: emoji,
-          onPaymentSuccess: () {
-            _handlePurchaseSuccess(productId);
-          },
-        ),
-      ),
-    );
+    setState(() => isLoading = true);
+    try {
+      final success = isConsumable
+          ? await PurchaseService.buyConsumable(productId)
+          : await PurchaseService.buyProduct(productId);
+      if (!success && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Purchase could not be started. Check your connection.'),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Purchase failed: ${e.toString()}')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => isLoading = false);
+    }
   }
 
   void _showExchangeDialog() {
@@ -192,13 +198,12 @@ class _ShopScreenState extends State<ShopScreen> {
     }
 
     widget.gameState.tokens -= cost;
-    widget.gameState.pendingEctsFromExchange += allowed;
+    widget.gameState.ects += allowed;
+    widget.gameState.totalEctsEarned += allowed;
     widget.gameState.ectsExchangedThisSemester += allowed;
     SaveService.saveGame(widget.gameState);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(
-              'Exchanged $allowed ECTS (awarded at the end of the semester).')),
+      SnackBar(content: Text('Exchanged $allowed ECTS!')),
     );
     setState(() {});
   }

@@ -179,8 +179,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   void onEctsClick() {
-    debugPrint(
-        'onEctsClick called - tokens before: ${gameState.tokens} frac=${gameState.tokensFraction.toStringAsFixed(2)}');
     setState(() {
       final motivationMultiplier =
           MotivationService.getMotivationMultiplier(gameState.motivation);
@@ -204,9 +202,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         gameState.battlePassXP += 1;
         _checkBattlePassLevelUp();
       }
-
-      debugPrint(
-          'onEctsClick done - tokens after: ${gameState.tokens} frac=${gameState.tokensFraction.toStringAsFixed(2)} gained: ${gained.toStringAsFixed(2)}');
     });
   }
 
@@ -234,8 +229,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   void buyUpgrade(Upgrade upgrade) {
     final currentLevel = gameState.upgrades[upgrade.id] ?? 0;
-    final price = upgrade.getPrice(currentLevel);
 
+    // Multiplier upgrades are one-time purchases
+    if (upgrade.type == UpgradeType.multiplier && currentLevel >= 1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Already purchased.')),
+      );
+      return;
+    }
+
+    final price = upgrade.getPrice(currentLevel);
     final int cost = price.round();
     if (gameState.tokens >= cost) {
       setState(() {
@@ -266,8 +269,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             }
             break;
           case UpgradeType.multiplier:
-            gameState.tokensPerClick *= 1.1;
-            gameState.tokensPerSecond *= 1.1;
+            final double mult = upgrade.id == 'publisher'
+                ? 1.3
+                : upgrade.id == 'conference'
+                    ? 1.2
+                    : 1.1;
+            gameState.tokensPerClick *= mult;
+            gameState.tokensPerSecond *= mult;
             break;
         }
       });
@@ -344,18 +352,15 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       }
 
       gameState.prestigePoints++;
-      final pending = gameState.pendingEctsFromExchange;
-      gameState.ects = pending.toDouble();
-      if (pending > 0) {
-        gameState.totalEctsEarned += pending;
-        gameState.pendingEctsFromExchange = 0;
-      }
-      gameState.ectsPerClick = 0.1 * (1 + gameState.prestigePoints * 0.1);
+      gameState.ects = 0;
+      gameState.pendingEctsFromExchange = 0;
       gameState.ectsPerSecond = 0;
       gameState.upgrades = Map.fromIterable(
         gameState.upgrades.keys,
         value: (_) => 0,
       );
+      gameState.tokensPerClick = 0.1;
+      gameState.tokensPerSecond = 0;
 
       gameState.ectsExchangedThisSemester = 0;
       gameState.maxEctsFromExchangePerSemester += 1;
@@ -483,12 +488,18 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   void _showExchangeDialogHome() {
     final rate = gameState.getTokensPerEcts();
+    final remainingLimit = gameState.maxEctsFromExchangePerSemester -
+        gameState.ectsExchangedThisSemester;
     final affordableByTokens = gameState.tokens ~/ rate;
-    final allowed = affordableByTokens;
+    final allowed =
+        remainingLimit < affordableByTokens ? remainingLimit : affordableByTokens;
 
     if (allowed <= 0) {
+      final reason = remainingLimit <= 0
+          ? 'Semester exchange limit reached (${gameState.maxEctsFromExchangePerSemester} ECTS/semester).'
+          : 'Not enough tokens (need $rate per ECTS).';
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No exchanges available (no tokens).')),
+        SnackBar(content: Text(reason)),
       );
       return;
     }
@@ -501,7 +512,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           title: const Text('Exchange tokens for ECTS',
               style: TextStyle(color: Colors.white)),
           content: Text(
-              'You can exchange up to $allowed ECTS ($rate tokens = 1 ECTS). You have ${gameState.tokens} tokens.',
+              'Rate: $rate tokens = 1 ECTS\n'
+              'You have: ${gameState.tokens} tokens\n'
+              'Semester limit: ${gameState.ectsExchangedThisSemester}/${gameState.maxEctsFromExchangePerSemester} used\n'
+              'Available to exchange: $allowed ECTS',
               style: const TextStyle(color: Colors.white70)),
           actions: [
             TextButton(
@@ -529,36 +543,30 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   void _performExchangeHome(int ectsToExchange) {
     final rate = gameState.getTokensPerEcts();
+    final remainingLimit = gameState.maxEctsFromExchangePerSemester -
+        gameState.ectsExchangedThisSemester;
     final affordableByTokens = gameState.tokens ~/ rate;
-    final allowedByRequest = ectsToExchange;
-    final allowed =
-        [affordableByTokens, allowedByRequest].reduce((a, b) => a < b ? a : b);
+    final allowed = [remainingLimit, affordableByTokens, ectsToExchange]
+        .reduce((a, b) => a < b ? a : b);
 
-    final cost = allowed * rate;
-    if (gameState.tokens < cost) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('You do not have enough tokens.')),
-      );
-      return;
-    }
     if (allowed <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text('Exchange limit reached for the semester.')),
+            content: Text('Exchange limit reached or not enough tokens.')),
       );
       return;
     }
 
+    final cost = allowed * rate;
     setState(() {
       gameState.tokens -= cost;
-      gameState.pendingEctsFromExchange += allowed;
+      gameState.ects += allowed;
+      gameState.totalEctsEarned += allowed;
       gameState.ectsExchangedThisSemester += allowed;
     });
     SaveService.saveGame(gameState);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(
-              'Exchanged $allowed ECTS (awarded at the end of the semester).')),
+      SnackBar(content: Text('Exchanged $allowed ECTS!')),
     );
   }
 
@@ -1182,7 +1190,24 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   Widget _buildQuickUpgrades() {
     final availableUpgrades =
         Upgrade.getUpgradesForLevel(gameState.educationLevel);
-    final quickUpgrades = availableUpgrades.take(3).toList();
+
+    // Hide one-time multiplier upgrades that are already purchased.
+    // Sort: affordable upgrades first (by price asc), then unaffordable (by price asc).
+    final quickUpgrades = availableUpgrades.where((u) {
+      if (u.type == UpgradeType.multiplier) {
+        return (gameState.upgrades[u.id] ?? 0) == 0;
+      }
+      return true;
+    }).toList()
+      ..sort((a, b) {
+        final aPrice = a.getPrice(gameState.upgrades[a.id] ?? 0);
+        final bPrice = b.getPrice(gameState.upgrades[b.id] ?? 0);
+        final aAffordable = gameState.tokens >= aPrice;
+        final bAffordable = gameState.tokens >= bPrice;
+        if (aAffordable != bAffordable) return bAffordable ? 1 : -1;
+        return aPrice.compareTo(bPrice);
+      });
+    final shown = quickUpgrades.take(3).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1215,7 +1240,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ],
         ),
         const SizedBox(height: 10),
-        ...quickUpgrades.map((upgrade) {
+        ...shown.map((upgrade) {
           return UpgradeCard(
             upgrade: upgrade,
             currentLevel: gameState.upgrades[upgrade.id] ?? 0,
