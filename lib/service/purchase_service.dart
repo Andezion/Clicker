@@ -27,6 +27,7 @@ class PurchaseService {
   };
 
   static List<ProductDetails> availableProducts = [];
+  static final Set<String> _ownedProductIds = {};
 
   static Future<bool> initialize() async {
     if (_isInitialized) return true;
@@ -75,7 +76,8 @@ class PurchaseService {
     for (final purchase in purchases) {
       debugPrint('📦 Purchase update: ${purchase.productID} - ${purchase.status}');
 
-      if (purchase.status == PurchaseStatus.purchased) {
+      if (purchase.status == PurchaseStatus.purchased ||
+          purchase.status == PurchaseStatus.restored) {
         _handleSuccessfulPurchase(purchase);
       } else if (purchase.status == PurchaseStatus.error) {
         debugPrint('❌ Purchase failed: ${purchase.error}');
@@ -88,8 +90,8 @@ class PurchaseService {
   }
 
   static void _handleSuccessfulPurchase(PurchaseDetails purchase) {
-    debugPrint('✅ Purchase successful: ${purchase.productID}');
-
+    debugPrint('✅ Purchase successful/restored: ${purchase.productID}');
+    _ownedProductIds.add(purchase.productID);
     _onPurchaseSuccess?.call(purchase.productID);
   }
 
@@ -154,9 +156,10 @@ class PurchaseService {
     }
   }
 
+  static bool isOwned(String productId) => _ownedProductIds.contains(productId);
+
   static Future<bool> isPurchased(String productId) async {
-    await _iap.restorePurchases();
-    return false; // TODO: Implement proper check
+    return _ownedProductIds.contains(productId);
   }
 
   static String getProductPrice(String productId) {
@@ -180,5 +183,6 @@ class PurchaseService {
   static void dispose() {
     _subscription?.cancel();
     _isInitialized = false;
+    _ownedProductIds.clear();
   }
 }
