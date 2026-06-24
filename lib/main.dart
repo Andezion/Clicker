@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'ui/home_screen.dart';
-import 'service/purchase_service.dart';
-import 'service/ad_service.dart';
+import 'ui/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await PurchaseService.initialize();
-  await AdService.initialize();
-
   runApp(const ECTSClickerApp());
 }
 
@@ -37,7 +31,7 @@ class ECTSClickerApp extends StatelessWidget {
           titleSmall: TextStyle(color: Colors.white),
         ),
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
